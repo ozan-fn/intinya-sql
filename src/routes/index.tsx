@@ -1,87 +1,101 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import XPTaskbar from "#/components/XPTaskbar";
+import XPStartMenu from "#/components/XPStartMenu";
+import BlissBackground from "@/assets/images/BlissBetter.jpg";
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute("/")({ component: App });
 
 function App() {
+  const [, setStartMenuOpen] = useState(false);
+  const [, setWindowFocused] = useState(true);
+
   return (
-    <main className="page-wrap px-4 pb-8 pt-14">
-      <section className="island-shell rise-in relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-14">
-        <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(79,184,178,0.32),transparent_66%)]" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(47,106,74,0.18),transparent_66%)]" />
-        <p className="island-kicker mb-3">TanStack Start Base Template</p>
-        <h1 className="display-title mb-5 max-w-3xl text-4xl leading-[1.02] font-bold tracking-tight text-[var(--sea-ink)] sm:text-6xl">
-          Start simple, ship quickly.
-        </h1>
-        <p className="mb-8 max-w-2xl text-base text-[var(--sea-ink-soft)] sm:text-lg">
-          This base starter intentionally keeps things light: two routes, clean
-          structure, and the essentials you need to build from scratch.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <a
-            href="/about"
-            className="rounded-full border border-[rgba(50,143,151,0.3)] bg-[rgba(79,184,178,0.14)] px-5 py-2.5 text-sm font-semibold text-[var(--lagoon-deep)] no-underline transition hover:-translate-y-0.5 hover:bg-[rgba(79,184,178,0.24)]"
-          >
-            About This Starter
-          </a>
-          <a
-            href="https://tanstack.com/router"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-[rgba(23,58,64,0.2)] bg-white/50 px-5 py-2.5 text-sm font-semibold text-[var(--sea-ink)] no-underline transition hover:-translate-y-0.5 hover:border-[rgba(23,58,64,0.35)]"
-          >
-            Router Guide
-          </a>
-        </div>
-      </section>
-
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <main
+      className="relative w-full min-h-screen overflow-hidden select-none cursor-default bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${BlissBackground})`,
+        fontFamily: "'Segoe UI', sans-serif",
+      }}
+      onClick={() => {
+        setStartMenuOpen(false);
+        setWindowFocused(true);
+      }}
+    >
+      {/* Desktop icons */}
+      <div className="absolute top-6 left-4 flex flex-col gap-6 z-0">
         {[
-          [
-            'Type-Safe Routing',
-            'Routes and links stay in sync across every page.',
-          ],
-          [
-            'Server Functions',
-            'Call server code from your UI without creating API boilerplate.',
-          ],
-          [
-            'Streaming by Default',
-            'Ship progressively rendered responses for faster experiences.',
-          ],
-          [
-            'Tailwind Native',
-            'Design quickly with utility-first styling and reusable tokens.',
-          ],
-        ].map(([title, desc], index) => (
-          <article
-            key={title}
-            className="island-shell feature-card rise-in rounded-2xl p-5"
-            style={{ animationDelay: `${index * 90 + 80}ms` }}
+          { label: "New_Query.sql", color: "#F5D547" },
+          { label: "Schema.db", color: "#5B9BD5" },
+          { label: "Readme.txt", color: "#ECE9D8" },
+        ].map((icon) => (
+          <div
+            key={icon.label}
+            className="flex flex-col items-center w-20 group cursor-pointer"
           >
-            <h2 className="mb-2 text-base font-semibold text-[var(--sea-ink)]">
-              {title}
-            </h2>
-            <p className="m-0 text-sm text-[var(--sea-ink-soft)]">{desc}</p>
-          </article>
+            <svg width="32" height="32" viewBox="0 0 32 32" className="mb-1">
+              <rect
+                x="4"
+                y="2"
+                width="24"
+                height="28"
+                fill={icon.color}
+                stroke="#000"
+                strokeWidth="1"
+              />
+              <rect
+                x="4"
+                y="2"
+                width="24"
+                height="6"
+                fill="#000"
+                opacity="0.15"
+              />
+              <rect
+                x="8"
+                y="12"
+                width="16"
+                height="2"
+                fill="#000"
+                opacity="0.3"
+              />
+              <rect
+                x="8"
+                y="17"
+                width="16"
+                height="2"
+                fill="#000"
+                opacity="0.3"
+              />
+              <rect
+                x="8"
+                y="22"
+                width="10"
+                height="2"
+                fill="#000"
+                opacity="0.3"
+              />
+            </svg>
+            <span
+              className="text-xs text-white text-center leading-tight px-1"
+              style={{
+                textShadow:
+                  "1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000",
+              }}
+            >
+              {icon.label}
+            </span>
+          </div>
         ))}
-      </section>
+      </div>
 
-      <section className="island-shell mt-8 rounded-2xl p-6">
-        <p className="island-kicker mb-2">Quick Start</p>
-        <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-[var(--sea-ink-soft)]">
-          <li>
-            Edit <code>src/routes/index.tsx</code> to customize the home page.
-          </li>
-          <li>
-            Update <code>src/components/Header.tsx</code> and{' '}
-            <code>src/components/Footer.tsx</code> for brand links.
-          </li>
-          <li>
-            Add routes in <code>src/routes</code> and tweak visual tokens in{' '}
-            <code>src/styles.css</code>.
-          </li>
-        </ul>
-      </section>
+      {/* Main window */}
+      <XPStartMenu />
+      
+      
+
+      {/* Taskbar */}
+      <XPTaskbar />
     </main>
-  )
+  );
 }

@@ -11,15 +11,13 @@ interface XPLoginFormProps {
 export function XPLoginForm({ onSubmit }: XPLoginFormProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     onSubmit?.(username, password);
-  };
-
-  const handleOAuthLogin = (provider: string) => {
-    console.log(`Login with ${provider}`);
-    // TODO: Implement OAuth login
   };
 
   return (
@@ -31,6 +29,7 @@ export function XPLoginForm({ onSubmit }: XPLoginFormProps) {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          disabled={isLoading}
           required
         />
 
@@ -40,11 +39,21 @@ export function XPLoginForm({ onSubmit }: XPLoginFormProps) {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isLoading}
           required
         />
 
-        <XPButton type="submit" fullWidth>
-          Login
+        {error && (
+          <div
+            className="text-xs text-red-700 bg-red-100 border border-red-400 px-2 py-1 rounded"
+            style={{ fontFamily: "'Segoe UI', sans-serif" }}
+          >
+            {error}
+          </div>
+        )}
+
+        <XPButton type="submit" fullWidth disabled={isLoading}>
+          {isLoading ? "Signing in..." : "Login"}
         </XPButton>
       </form>
 
@@ -71,17 +80,17 @@ export function XPLoginForm({ onSubmit }: XPLoginFormProps) {
         <XPButton
           type="button"
           variant="icon"
-          fullWidth
           icon={<img src={googleLogo} alt="Google" className="w-6 h-6" />}
-          onClick={() => handleOAuthLogin("Google")}
+          disabled={isLoading}
+          title="Login with Google"
         />
 
         <XPButton
           type="button"
           variant="icon"
-          fullWidth
           icon={<img src={discordLogo} alt="Discord" className="w-6 h-6" />}
-          onClick={() => handleOAuthLogin("Discord")}
+          disabled={isLoading}
+          title="Login with Discord"
         />
       </div>
     </div>

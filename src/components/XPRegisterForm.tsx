@@ -14,6 +14,7 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +37,7 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          disabled={isLoading}
           required
         />
 
@@ -45,6 +47,7 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isLoading}
           required
         />
 
@@ -54,6 +57,7 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          disabled={isLoading}
           required
         />
 
@@ -67,8 +71,8 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
           </div>
         )}
 
-        <XPButton type="submit" fullWidth>
-          Register
+        <XPButton type="submit" fullWidth disabled={isLoading}>
+          {isLoading ? "Registering..." : "Register"}
         </XPButton>
       </form>
 
@@ -95,15 +99,17 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
         <XPButton
           type="button"
           variant="icon"
-          fullWidth
           icon={<img src={googleLogo} alt="Google" className="w-6 h-6" />}
+          disabled={isLoading}
+          title="Sign up with Google"
         />
 
         <XPButton
           type="button"
           variant="icon"
-          fullWidth
           icon={<img src={discordLogo} alt="Discord" className="w-6 h-6" />}
+          disabled={isLoading}
+          title="Sign up with Discord"
         />
       </div>
     </div>

@@ -1,76 +1,16 @@
-node_modules/
-
-# pnpm
-.pnpm-store/
-
-dist/
-dist-ssr/
-.output/
-.nitro/
-.vinxi/
-
-.tanstack/
-src/routeTree.gen.ts
-
-.wrangler/
-
-.env
-.env.*
-!.env.example
-
-*.local
-
-logs/
-*.log
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-.vite/
-.cache/
-.eslintcache
-.swc/
-
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-*.code-workspace
-
+# Local
 .DS_Store
-Thumbs.db
+*.local
+*.log*
 
-.netlify/
+# Dist
+node_modules
+dist/
 
-__unconfig*
-todos.json
+# Profile
+.rspack-profile-*/
 
-coverage/
-
-# Database & Drizzle
-drizzle/
-*.db
-*.sqlite
-*.sqlite3
-
-# Build tools cache
-.turbo/
-.parcel-cache/
-.next/
-.nuxi/
-
-# TypeScript
-*.tsbuildinfo
-
-# OS temp files
-.tmp/
-temp/
-
-# IDE generated files
-.prettierignore
-.prettierrc.local
-
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea

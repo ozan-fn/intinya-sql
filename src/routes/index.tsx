@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import XPTaskbar from "#/components/XPTaskbar";
-import XPStartMenu from "#/components/XPStartMenu";
+import XPTaskbar from "@/components/XPTaskbar";
+import XPStartMenu from "@/components/XPStartMenu";
 import BlissBackground from "@/assets/images/BlissBetter.jpg";
 
 export const Route = createFileRoute("/")({ component: App });

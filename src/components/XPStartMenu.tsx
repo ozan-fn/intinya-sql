@@ -184,7 +184,7 @@ export default function XPStartMenu() {
             fontFamily: "'Segoe UI', sans-serif",
           }}
         >
-          <span>Ready</span>
+          <span>Version 1.0.0</span>
           <span
             style={{ fontFamily: "'Courier New', ui-monospace, monospace" }}
           >

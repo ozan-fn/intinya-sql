@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { XPInput } from "./XPInput";
 import { XPButton } from "./XPButton";
+import googleLogo from "@/assets/icons/google.svg";
+import discordLogo from "@/assets/icons/discord.svg";
 
 interface XPLoginFormProps {
   onSubmit?: (username: string, password: string) => void;
@@ -65,22 +67,22 @@ export function XPLoginForm({ onSubmit }: XPLoginFormProps) {
       </div>
 
       {/* OAuth buttons */}
-      <div className="space-y-2">
+      <div className="flex gap-4 w-fit mx-auto">
         <XPButton
           type="button"
-          onClick={() => handleOAuthLogin("Google")}
+          variant="icon"
           fullWidth
-        >
-          Login with Google
-        </XPButton>
+          icon={<img src={googleLogo} alt="Google" className="w-6 h-6" />}
+          onClick={() => handleOAuthLogin("Google")}
+        />
 
         <XPButton
           type="button"
-          onClick={() => handleOAuthLogin("Discord")}
+          variant="icon"
           fullWidth
-        >
-          Login with Discord
-        </XPButton>
+          icon={<img src={discordLogo} alt="Discord" className="w-6 h-6" />}
+          onClick={() => handleOAuthLogin("Discord")}
+        />
       </div>
     </div>
   );

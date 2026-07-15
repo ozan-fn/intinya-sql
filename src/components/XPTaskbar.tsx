@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import WindowsStartIcon from "@/assets/icons/windows-start.png";
+import WindowsStartIcon from "@/assets/icons/windows-xp/windows-start.png";
 
 type TaskbarApp = {
   id: string;
@@ -22,11 +22,13 @@ export default function XPTaskbar({
   onAppClick,
   onStartMenuItemClick,
 }: XPTaskbarProps) {
-  const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState<Date | null>(null);
   const [startMenuOpen, setStartMenuOpen] = useState(false);
   const startMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Set initial time after mount to avoid hydration mismatch
+    setTime(new Date());
     const id = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(id);
   }, []);
@@ -42,11 +44,11 @@ export default function XPTaskbar({
     return () => document.removeEventListener("click", handleClickOutside, true);
   }, [startMenuOpen]);
 
-  const timeString = time.toLocaleTimeString("en-US", {
+  const timeString = time?.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
-  });
+  }) || "--:-- --";
 
   return (
     <>

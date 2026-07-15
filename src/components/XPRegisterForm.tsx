@@ -2,6 +2,9 @@ import { useState } from "react";
 import { XPInput } from "./XPInput";
 import { XPButton } from "./XPButton";
 
+import googleLogo from "@/assets/icons/google.svg";
+import discordLogo from "@/assets/icons/discord.svg";
+
 interface XPRegisterFormProps {
   onSubmit?: (username: string, password: string) => void;
 }
@@ -22,11 +25,6 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
     }
 
     onSubmit?.(username, password);
-  };
-
-  const handleOAuthRegister = (provider: string) => {
-    console.log(`Register with ${provider}`);
-    // TODO: Implement OAuth register
   };
 
   return (
@@ -93,22 +91,20 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
       </div>
 
       {/* OAuth buttons */}
-      <div className="space-y-2">
+      <div className="flex gap-4 w-fit mx-auto">
         <XPButton
           type="button"
-          onClick={() => handleOAuthRegister("Google")}
+          variant="icon"
           fullWidth
-        >
-          Register with Google
-        </XPButton>
+          icon={<img src={googleLogo} alt="Google" className="w-6 h-6" />}
+        />
 
         <XPButton
           type="button"
-          onClick={() => handleOAuthRegister("Discord")}
+          variant="icon"
           fullWidth
-        >
-          Register with Discord
-        </XPButton>
+          icon={<img src={discordLogo} alt="Discord" className="w-6 h-6" />}
+        />
       </div>
     </div>
   );

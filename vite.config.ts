@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { defineConfig } from 'vite'
 import { devtools } from '@tanstack/devtools-vite'
 
@@ -7,6 +8,8 @@ import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
 import { nitro } from 'nitro/vite'
+
+const apiUrl = process.env.VITE_API_URL
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
@@ -18,6 +21,14 @@ const config = defineConfig({
     viteReact(),
     babel({ presets: [reactCompilerPreset()] }),
   ],
+  server: {
+    proxy: {
+        "/api": {
+            target: apiUrl,
+            changeOrigin: true,
+        },
+    },
+},
 })
 
 export default config

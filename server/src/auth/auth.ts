@@ -13,8 +13,8 @@ export const auth = betterAuth({
     enabled: true,
   },
 
-  baseURL: import.meta.env.BETTER_AUTH_URL!,
-  secret: import.meta.env.BETTER_AUTH_SECRET!,
+  baseURL: process.env.BETTER_AUTH_URL!,
+  secret: process.env.BETTER_AUTH_SECRET!,
 
   socialProviders: {
     discord: {

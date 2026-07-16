@@ -2,8 +2,8 @@ import "dotenv/config";
 import { serve } from "@hono/node-server";
 import { app } from "./hono";
 
-const port = parseInt(process.env.BACKEND_PORT || "3001", 10);
-const host = process.env.BACKEND_HOST || "localhost";
+const port = parseInt(process.env.PORT || "3001", 10);
+const host = "127.0.0.1";
 
 serve({
   fetch: app.fetch,

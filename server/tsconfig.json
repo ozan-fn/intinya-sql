@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "lib": ["ES2020"],
+    "target": "ES2020",
+    "module": "Node16",
+    "moduleResolution": "node16",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["src"]
+}

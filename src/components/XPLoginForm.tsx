@@ -3,6 +3,7 @@ import { XPInput } from "./XPInput";
 import { XPButton } from "./XPButton";
 import googleLogo from "@/assets/icons/google.svg";
 import discordLogo from "@/assets/icons/discord.svg";
+import { authClient } from "@/lib/auth-client";
 
 interface XPLoginFormProps {
   onSubmit?: (username: string, password: string) => void;
@@ -18,6 +19,14 @@ export function XPLoginForm({ onSubmit }: XPLoginFormProps) {
     e.preventDefault();
     setError("");
     onSubmit?.(username, password);
+  };
+
+  const handleGoogleLogin = () => {
+    authClient.signIn.social({ provider: "google", callbackURL: window.location.origin });
+  };
+
+  const handleDiscordLogin = () => {
+    authClient.signIn.social({ provider: "discord", callbackURL: window.location.origin });
   };
 
   return (
@@ -83,6 +92,7 @@ export function XPLoginForm({ onSubmit }: XPLoginFormProps) {
           icon={<img src={googleLogo} alt="Google" className="w-6 h-6" />}
           disabled={isLoading}
           title="Login with Google"
+          onClick={handleGoogleLogin}
         />
 
         <XPButton
@@ -91,6 +101,7 @@ export function XPLoginForm({ onSubmit }: XPLoginFormProps) {
           icon={<img src={discordLogo} alt="Discord" className="w-6 h-6" />}
           disabled={isLoading}
           title="Login with Discord"
+          onClick={handleDiscordLogin}
         />
       </div>
     </div>

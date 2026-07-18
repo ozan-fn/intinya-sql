@@ -3,6 +3,7 @@ import { XPWindowControls } from "./XPWindowsControls";
 import { XPErrorDialog } from "./XPErrorDialog";
 import { XPLoginForm } from "./XPLoginForm";
 import { XPRegisterForm } from "./XPRegisterForm";
+import { authClient } from "@/lib/auth-client";
 import { XPButton } from "./XPButton";
 
 type ViewType = "menu" | "login" | "register";
@@ -12,14 +13,29 @@ export default function XPStartMenu() {
   const [errorDialog, setErrorDialog] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>("menu");
 
-  const handleLogin = (username: string, password: string) => {
-    console.log("Login:", { username, password });
-    // TODO: Implement login logic
+  const handleLogin = async (username: string, password: string) => {
+    try {
+      await authClient.signIn.email({
+        email: username,
+        password: password,
+      });
+      console.log("Login successful");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
-  const handleRegister = (username: string, password: string) => {
-    console.log("Register:", { username, password });
-    // TODO: Implement register logic
+  const handleRegister = async (username: string, password: string) => {
+    try {
+      await authClient.signUp.email({
+        email: username,
+        password: password,
+        name: username,
+      });
+      console.log("Registration successful");
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
   };
 
   const handleBack = () => {

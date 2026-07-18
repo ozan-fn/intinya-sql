@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { XPInput } from "./XPInput";
 import { XPButton } from "./XPButton";
+import { authClient } from "@/lib/auth-client";
 
 import googleLogo from "@/assets/icons/google.svg";
 import discordLogo from "@/assets/icons/discord.svg";
@@ -26,6 +27,14 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
     }
 
     onSubmit?.(username, password);
+  };
+
+  const handleGoogleLogin = () => {
+    authClient.signIn.social({ provider: "google", callbackURL: window.location.origin });
+  };
+
+  const handleDiscordLogin = () => {
+    authClient.signIn.social({ provider: "discord", callbackURL: window.location.origin });
   };
 
   return (
@@ -102,6 +111,7 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
           icon={<img src={googleLogo} alt="Google" className="w-6 h-6" />}
           disabled={isLoading}
           title="Sign up with Google"
+          onClick={handleGoogleLogin}
         />
 
         <XPButton
@@ -110,6 +120,7 @@ export function XPRegisterForm({ onSubmit }: XPRegisterFormProps) {
           icon={<img src={discordLogo} alt="Discord" className="w-6 h-6" />}
           disabled={isLoading}
           title="Sign up with Discord"
+          onClick={handleDiscordLogin}
         />
       </div>
     </div>

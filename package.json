@@ -6,11 +6,13 @@
   "scripts": {
     "build": "rsbuild build",
     "dev": "rsbuild",
+    "dev:server": "cd server && pnpm dev",
     "preview": "rsbuild preview"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.18",
     "@tanstack/react-router-devtools": "^1.167.0",
+    "better-auth": "^1.6.23",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.545.0",

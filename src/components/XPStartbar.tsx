@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import WindowsStartIcon from "@/assets/icons/windows-xp/windows-start.png";
+import XPStartMenu from "./XPStartMenu";
+import { authClient } from "@/lib/auth-client";
 
 type TaskbarApp = {
   id: string;
@@ -13,9 +15,7 @@ type XPTaskbarProps = {
   onStartMenuItemClick?: (item: string) => void;
 };
 
-const defaultApps: TaskbarApp[] = [
-  { id: "anomalysql", title: "AnomalySQL.exe", active: true },
-];
+const defaultApps: TaskbarApp[] = [];
 
 export default function XPTaskbar({
   apps = defaultApps,
@@ -25,12 +25,32 @@ export default function XPTaskbar({
   const [time, setTime] = useState<Date | null>(null);
   const [startMenuOpen, setStartMenuOpen] = useState(false);
   const startMenuRef = useRef<HTMLDivElement>(null);
+  const [username, setUsername] = useState<string>("Guest");
 
   useEffect(() => {
     // Set initial time after mount to avoid hydration mismatch
     setTime(new Date());
     const id = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    // Get user session
+    const getUser = async () => {
+      try {
+        const session = await authClient.getSession();
+        if (session && session.data && 'user' in session.data && session.data.user) {
+          if (session.data.user.name) {
+            setUsername(session.data.user.name);
+          } else if (session.data.user.email) {
+            setUsername(session.data.user.email.split("@")[0]);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to get session:", error);
+      }
+    };
+    getUser();
   }, []);
 
   useEffect(() => {
@@ -111,26 +131,15 @@ export default function XPTaskbar({
 
           {/* Start menu */}
           {startMenuOpen && (
-            <div
-              ref={startMenuRef}
-              className="absolute bottom-9 left-0 w-64 z-40 border border-black bg-[#ECE9D8] shadow-[inset_1px_1px_0_#fff,inset_-1px_-1px_0_#404040,2px_2px_6px_rgba(0,0,0,0.4)]"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="py-2">
-                {["Login", "Register", "Options", "Shut Down"].map((item) => (
-                  <button
-                    key={item}
-                    className="w-full text-left px-4 py-2 text-sm text-black hover:bg-[#0A246A] hover:text-white"
-                    style={{ fontFamily: "'Segoe UI', sans-serif" }}
-                    onClick={() => {
-                      onStartMenuItemClick?.(item);
-                      setStartMenuOpen(false);
-                    }}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
+            <div ref={startMenuRef}>
+              <XPStartMenu
+                username={username}
+                onClose={() => setStartMenuOpen(false)}
+                onItemClick={(item) => {
+                  onStartMenuItemClick?.(item);
+                  setStartMenuOpen(false);
+                }}
+              />
             </div>
           )}
         </div>

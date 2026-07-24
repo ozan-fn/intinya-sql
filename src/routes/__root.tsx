@@ -1,5 +1,5 @@
 import { createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 function NotFoundComponent() {
@@ -26,7 +26,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <ErrorBoundary>
       <div className="min-h-screen bg-background font-sans antialiased">
         {children}
-        <TanStackRouterDevtoolsPanel />
+        <TanStackRouterDevtools position="bottom-right" />
       </div>
     </ErrorBoundary>
   );

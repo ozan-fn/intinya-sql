@@ -1,14 +1,32 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import XPTaskbar from "@/components/XPTaskbar";
-import XPStartMenu from "@/components/XPStartMenu";
+import { useState, useEffect } from "react";
+import XPTaskbar from "src/components/XPStartbar";
+import XPStartMenu from "src/components/XPPrequisiteForm";
 import BlissBackground from "@/assets/images/BlissBetter.jpg";
+import { authClient } from "@/lib/auth-client";
 
 export const Route = createFileRoute("/")({ component: App });
 
 function App() {
   const [, setStartMenuOpen] = useState(false);
   const [, setWindowFocused] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const session = await authClient.getSession();
+        setIsLoggedIn(!!session);
+      } catch (error) {
+        console.error("Failed to check auth:", error);
+        setIsLoggedIn(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    checkAuth();
+  }, []);
 
   return (
     <main
@@ -89,10 +107,8 @@ function App() {
         ))}
       </div>
 
-      {/* Main window */}
-      <XPStartMenu />
-      
-      
+      {/* Main window - Only show if not logged in */}
+      {!isLoading && !isLoggedIn && <XPStartMenu />}
 
       {/* Taskbar */}
       <XPTaskbar />

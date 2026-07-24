@@ -229,3 +229,16 @@ button:active,
 [style*="cursor: nwse-resize"] {
   cursor: url('./assets/cursor/size3_r.cur'), nwse-resize;
 }
+
+/* Windows XP Start Menu Animations */
+@keyframes invertToGray {
+  0% {
+    filter: brightness(1) grayscale(0);
+  }
+  30% {
+    filter: brightness(1) grayscale(0);
+  }
+  100% {
+    filter: brightness(0.6) grayscale(1);
+  }
+}
